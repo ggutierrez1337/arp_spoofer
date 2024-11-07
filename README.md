@@ -41,10 +41,6 @@ This Python project demonstrates how to perform ARP (Address Resolution Protocol
 
 </br>
 
-```commandline
-
-
-````
 
 <!--
  ```diff

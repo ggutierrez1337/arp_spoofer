@@ -36,7 +36,7 @@ This Python project demonstrates how to perform ARP (Address Resolution Protocol
         <li><b>Spoofing Function:</b> The <code>spoof()</code> function creates an ARP packet with the attacker's MAC address, pretending to be the router (or any spoofed source). This packet is then sent to the target device, making it believe the attacker is the router.</li>
         <li><b>Restore Function:</b> The <code>restore()</code> function sends ARP packets to restore the MAC addresses to their original state, fixing the ARP tables of both the target and the gateway.</li>
         <li><b>Main Attack Loop:</b> The script continuously sends spoofing packets to both the target and the gateway, creating a MITM attack. The counter <code>sent_packets_count</code> tracks the number of packets sent.</li>
-        <li><b>Graceful Termination:</b> When the user interrupts the attack (via CTRL+C), the script calls the <code>restore()</code> function to reset the network devices to their normal state.</li>
+        <li><b>Termination:</b> When the user interrupts the attack (via CTRL+C), the script calls the <code>restore()</code> function to reset the network devices to their normal state.</li>
     </ol>
 
 </br>

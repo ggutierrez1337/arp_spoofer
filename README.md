@@ -39,8 +39,63 @@ This Python project demonstrates how to perform ARP (Address Resolution Protocol
         <li><b>Termination:</b> When the user interrupts the attack (via CTRL+C), the script calls the <code>restore()</code> function to reset the network devices to their normal state.</li>
     </ol>
 
-</br>
+<h1><b>What is ARP?</b></h1>
+ARP (Address Resolution Protocol) is a network protocol used to map an IP address to its corresponding MAC (Media Access Control) address in a local network. ARP operates at the Data Link Layer (Layer 2) and the Network Layer (Layer 3) of the OSI model.
 
+<br></br>
+
+When a device on a network needs to communicate with another device, it uses IP addresses to route the message. However, once the message reaches the local network, it needs to be delivered to the correct device using its MAC address, which is specific to the network interface. This is where ARP comes into play: it enables devices to discover the MAC address of a device that corresponds to a known IP address.
+
+<h1><b>ARP Request:</b></h1>
+    <p>This is a message broadcasted to all devices in the local network (Layer 2 broadcast) asking for the MAC address that corresponds to a specific IP address.</p>
+    <p>The request contains:</p>
+    <ul>
+        <li><b>Sender MAC address:</b> The MAC address of the requesting device.</li>
+        <li><b>Sender IP address:</b> The IP address of the requesting device.</li>
+        <li><b>Target IP address:</b> The IP address for which the MAC address is being requested.</li>
+        <li><b>Target MAC address:</b> Set to <code>00:00:00:00:00:00</code> initially (since it's unknown).</li>
+    </ul>
+    <p>The ARP request is broadcast to all devices in the local subnet, and the device with the matching IP address responds with its MAC address.</p>
+    
+<h1><b>ARP Reply:</b></h1>
+    <p>This is a unicast message sent by the device that owns the IP address being queried. It provides the MAC address that corresponds to the requested IP.</p>
+    <p>The reply contains:</p>
+    <ul>
+        <li><b>Sender MAC address:</b> The MAC address of the device responding to the request.</li>
+        <li><b>Sender IP address:</b> The IP address of the responding device.</li>
+        <li><b>Target MAC address:</b> The MAC address of the requesting device (i.e., the device that sent the ARP request).</li>
+        <li><b>Target IP address:</b> The IP address of the requesting device.</li>
+    </ul>
+
+<h2>How ARP Works</h2>
+
+<b>ARP Request:</b>
+<ul>
+  <li>A device (e.g., a computer) needs to send data to another device within the same local network but only knows its IP address.</li>
+  <li>The device broadcasts an ARP request packet, asking, "Who has IP address <code>X.X.X.X</code>? Tell me your MAC address."</li>
+</ul>
+
+<b>ARP Reply:</b>
+<ul>
+  <li>The device with the matching IP address responds with an ARP reply that contains its MAC address.</li>
+  <li>The requesting device then caches this IP-to-MAC mapping for future use.</li>
+</ul>
+
+<b>Caching:</b>
+<ul>
+  <li>Both the requester and the responder cache the mapping of IP-to-MAC in an ARP table (or ARP cache) for a certain period. This eliminates the need for repeated ARP requests for the same address.</li>
+</ul>
+
+<b>Example:</b>
+<p>Suppose Device A (IP: <code>192.168.1.2</code>) wants to communicate with Device B (IP: <code>192.168.1.3</code>) in the same local network. Device A does not know the MAC address of Device B, so it sends an ARP request:</p>
+
+<pre><code>Who has 192.168.1.3? Tell 192.168.1.2</code></pre>
+
+<p>Device B responds with an ARP reply:</p>
+
+<pre><code>192.168.1.3 is at 00:14:22:47:82:90</code></pre>
+
+<p>Now, Device A knows that <code>192.168.1.3</code> corresponds to the MAC address <code>00:14:22:47:82:90</code>, and it can send packets directly to this address.</p>
 
 <!--
  ```diff
